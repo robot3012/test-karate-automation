@@ -1,0 +1,19 @@
+{
+  "userContract": {
+    "_id": "#string",
+    "nome": "#string",
+    "email": "#string",
+    "password": "#string",
+    "administrador": "#string"
+  },
+  "successMessageContract": {
+    "message": "#string"
+  },
+  "createUserResponseContract": {
+    "message": "#string",
+    "_id": "#string"
+  },
+  "errorMessageContract": {
+    "message": "#string"
+  }
+}
