@@ -107,5 +107,5 @@ Opciones comunes:
 
 ## Estrategia
 
-Ver `STRATEGY.md` para enfoque, patrones y trazabilidad.
+Ver [STRATEGY.md](STRATEGY.md) para enfoque, patrones y trazabilidad.
 
