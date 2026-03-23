@@ -8,14 +8,7 @@ Feature: Usuarios - Buscar por id
 
   @smoke @regression @CP006
   Scenario: GET /usuarios/{_id} - buscar usuario existente
-    * def newUser = utils.generateUser(null)
-
-    Given path 'usuarios'
-    And request newUser
-    When method post
-    Then status 201
-    * def createdId = response._id
-
+    * call read('classpath:bdd/users/users-create.feature@CP003')
     Given path 'usuarios', createdId
     When method get
     Then status 200
@@ -23,10 +16,10 @@ Feature: Usuarios - Buscar por id
     And match response._id == createdId
     And match response.email == newUser.email
 
-  @negative @regression @CP007
-  Scenario: GET /usuarios/{_id} - usuario inexistente
-    * def fakeId = 'non-existent-' + utils.randomId()
 
+  @negative @regression @CP007
+  Scenario: GET /usuarios/{_id} - usuario con id que desborda el limite
+    * def fakeId = utils.randomId() + 'x'.repeat(100)
     Given path 'usuarios', fakeId
     When method get
     Then assert responseStatus == 400 || responseStatus == 404
@@ -34,4 +27,22 @@ Feature: Usuarios - Buscar por id
     And assert errorValues.length > 0
     And match each errorValues == '#string'
 
+  @negative @regression @CP008
+  Scenario: GET /usuarios/{_id} - usuario con id con formato no permitido
+    * def fakeId = 'id-formato!00012'
+    Given path 'usuarios', fakeId
+    When method get
+    Then assert responseStatus == 400 || responseStatus == 404
+    * def errorValues = karate.valuesOf(response)
+    And assert errorValues.length > 0
+    And match each errorValues == '#string'
 
+  @negative @regression @CP009
+  Scenario: GET /usuarios/{_id} - usuario inexistente
+    * def fakeId = utils.randomId()
+    Given path 'usuarios', fakeId
+    When method get
+    Then assert responseStatus == 400 || responseStatus == 404
+    * def errorValues = karate.valuesOf(response)
+    And assert errorValues.length > 0
+    And match each errorValues == '#string'

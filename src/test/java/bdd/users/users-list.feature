@@ -14,7 +14,7 @@ Feature: Usuarios - Listar usuarios
     And match each response.usuarios contains schemas.userContract
 
   @negative @regression @CP002
-  Scenario: GET /usuarios con query no soportado no rompe el contrato de respuesta
+  Scenario: GET /usuarios con limite invalido retorna error de validacion
     Given path 'usuarios'
     And param limite = -1
     When method get

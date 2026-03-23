@@ -8,13 +8,7 @@ Feature: Usuarios - Eliminar usuario
 
   @smoke @regression @CP010
   Scenario: DELETE /usuarios/{_id} - eliminar usuario existente
-    * def newUser = utils.generateUser(null)
-
-    Given path 'usuarios'
-    And request newUser
-    When method post
-    Then status 201
-    * def createdId = response._id
+    * call read('classpath:bdd/users/users-create.feature@CP003')
 
     Given path 'usuarios', createdId
     When method delete
@@ -28,7 +22,7 @@ Feature: Usuarios - Eliminar usuario
 
   @negative @regression @CP011
   Scenario: DELETE /usuarios/{_id} - usuario inexistente
-    * def fakeId = 'non-existent-' + utils.randomId()
+    * def fakeId =  utils.randomId()
 
     Given path 'usuarios', fakeId
     When method delete

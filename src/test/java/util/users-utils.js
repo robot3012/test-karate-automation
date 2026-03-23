@@ -1,6 +1,6 @@
 function fn() {
   function randomId() {
-    return java.util.UUID.randomUUID().toString();
+    return java.util.UUID.randomUUID().toString().replace(/-/g, '').substring(0, 16);
   }
 
   function generateEmail(prefix) {

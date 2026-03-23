@@ -6,14 +6,9 @@ Feature: Usuarios - Actualizar usuario
     * def utils = call read('classpath:util/users-utils.js')
     * def schemas = read('classpath:responses/users-responses.json')
 
-  @smoke @regression @CP008
+  @smoke @regression @CP0011
   Scenario: PUT /usuarios/{_id} - actualizar usuario existente
-    * def newUser = utils.generateUser(null)
-
-    Given path 'usuarios'
-    And request newUser
-    When method post
-    Then status 201
+    * call read('classpath:bdd/users/users-create.feature@CP003')
     * def createdId = response._id
 
     * def updatedUser = newUser
@@ -31,7 +26,7 @@ Feature: Usuarios - Actualizar usuario
     And match response.nome == 'QA Test Updated'
     And match response contains schemas.userContract
 
-  @negative @regression @CP009
+  @negative @regression @CP012
   Scenario: PUT /usuarios/{_id} - actualizar con datos invalidos
     * def newUser = utils.generateUser(null)
 
